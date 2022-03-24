@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="450"
+             x:Class="Lab_6.Views.AddNoteView">
+
+	<UserControl.Styles>
+		<Style Selector="Button.s1">
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		</Style>
+	</UserControl.Styles>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+		</Grid.RowDefinitions>
+
+		<TextBox Grid.Row="0" Watermark="Введите название заметки" Text="{Binding Name}"></TextBox>
+		<TextBox Grid.Row="1" Watermark="Введите текст заметки" TextWrapping ="Wrap" Text="{Binding Text}"></TextBox>
+		<Button
+			Grid.Row="2"
+			Classes="s1"
+			Content="OK"
+			Command="{Binding Add}">
+		</Button>
+		<Button
+			Grid.Row="3"
+			Classes="s1"
+			Content="Cancel"
+			Command="{Binding Cancel}">
+		</Button>
+	</Grid>
+	
+</UserControl>
