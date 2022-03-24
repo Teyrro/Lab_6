@@ -37,9 +37,16 @@ namespace Lab_6.ViewModels
             get;
         }
 
-        public void Change()
+        public void Change(NoteData Item)
         {
-            var addView = new AddNoteViewModel();
+            AddNoteViewModel addView ;
+            if (Item == null)
+            {
+                addView = new AddNoteViewModel();
+            }
+            else 
+                addView = new AddNoteViewModel(Item);
+            
             Title = "Ежедневник - Новая заметка";
 
             Observable.Merge(addView.Add, addView.Cancel.Select(_ => (NoteData?)null))
@@ -48,7 +55,8 @@ namespace Lab_6.ViewModels
                 {
                     if (newNote != null)
                     {
-                        mainView.UpdateSingleList(newNote);
+                        
+                       mainView.UpdateSingleList(newNote, Item);
                     }
                     CurrentView = mainView;
                     mainView.CheckDate();
@@ -59,6 +67,12 @@ namespace Lab_6.ViewModels
 
             CurrentView = addView;
         
+        }
+
+        public void DelItem(NoteData a)
+        {
+            mainView.DeleteNote(a);
+            mainView.CheckDate();
         }
     }
 }

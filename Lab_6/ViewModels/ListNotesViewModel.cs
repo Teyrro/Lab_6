@@ -28,7 +28,7 @@ namespace Lab_6.ViewModels
         public int SelectedIndex
         {
             get => selectedIndex;
-            set => this.RaiseAndSetIfChanged(ref selectedIndex, value - 1);
+            set => this.RaiseAndSetIfChanged(ref selectedIndex, value);
         }
 
         public ListNotesViewModel() 
@@ -37,8 +37,7 @@ namespace Lab_6.ViewModels
             SingNote = new List<SingleDateNotes>();
             ResultNotes = new ObservableCollection<NoteData>();
             BuildSomeTestNotes();
-            
-            DeleteButton = ReactiveCommand.Create(() => DeleteNote());
+
             CurrentDate = DateTime.Today;
         }
 
@@ -46,12 +45,21 @@ namespace Lab_6.ViewModels
         
         public List<SingleDateNotes> SingNote { get; set; }
 
-        public void UpdateSingleList(NoteData newNote)
+        public void UpdateSingleList(NoteData newNote, NoteData oldNote)
         {
         
             if (SingNote.Exists(p => p.Date == CurrentDate))
             {
-                SingNote.Find(p => p.Date == CurrentDate).Notes.Add(newNote);
+                List<NoteData> list = SingNote.Find(p => p.Date == CurrentDate).Notes;
+                
+                if (list.Contains(oldNote))
+                    list.Remove(oldNote);
+                list.Add(newNote);
+                /*if (list.Find(p => p == oldNote) != null)
+                {
+                    list.Find(p => p == oldNote).Name = newNote.Name;
+                    list.Find(p => p == oldNote).Text = newNote.Text;
+                }*/
             }
             else
             {
@@ -60,11 +68,9 @@ namespace Lab_6.ViewModels
                 SingNote.Add(new SingleDateNotes(CurrentDate, listNewNote));
             }
         }
-
-        public ReactiveCommand<Unit, Unit> DeleteButton { get; set; }
-        public void DeleteNote()
+        public void DeleteNote(NoteData aaaa)
         {
-            SingNote.Find(p => p.Date == currentDate).Notes.RemoveAt(SelectedIndex);
+            SingNote.Find(p => p.Date == currentDate).Notes.Remove(aaaa);
             CheckDate();
         }
 

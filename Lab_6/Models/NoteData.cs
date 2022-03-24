@@ -8,9 +8,9 @@ namespace Lab_6.Models
 {
     public class NoteData
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        public string Text { get; private set; }
+        public string Text { get; set; }
 
     
         public NoteData (string name, string text)

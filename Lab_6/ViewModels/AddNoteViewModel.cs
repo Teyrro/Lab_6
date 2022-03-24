@@ -17,8 +17,18 @@ namespace Lab_6.ViewModels
 
         public AddNoteViewModel()
         {
-            name = "";
-            text = "";
+            var addEnabled = this.WhenAnyValue(
+                newNote => newNote.Name,
+                newNote => !string.IsNullOrWhiteSpace(newNote));
+
+            Add = ReactiveCommand.Create(() => UpdateNote(), addEnabled);
+            Cancel = ReactiveCommand.Create(() => { });
+        }
+
+        public AddNoteViewModel(NoteData note)
+        {
+            Text = note.Text;
+            Name = note.Name;
             var addEnabled = this.WhenAnyValue(
                 newNote => newNote.Name,
                 newNote => !string.IsNullOrWhiteSpace(newNote));
